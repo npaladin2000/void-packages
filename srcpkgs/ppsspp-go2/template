@@ -1,10 +1,10 @@
-# Template file for 'ppsspp'
-pkgname=ppsspp
-version=1.9.4
-_gitrev=4a36c99e944865352c06ad468b0c0c35bd8fa9d7
+# Template file for 'ppsspp-go2'
+pkgname=ppsspp-go2
+version=20200623
 revision=2
+_gitrev=c85bdbfdc7bccaf082ff668404a53f69739b0e3c
 create_wrksrc=yes
-build_wrksrc="ppsspp-${_gitrev}"
+build_wrksrc="ppsspp-go2-${_gitrev}"
 build_style=cmake
 configure_args="-DHEADLESS=OFF -DUSE_SYSTEM_FFMPEG=ON
  -DUSING_QT_UI=OFF
@@ -14,25 +14,31 @@ configure_args="-DHEADLESS=OFF -DUSE_SYSTEM_FFMPEG=ON
  -DUSING_GLES2=ON
  -DUSE_SYSTEM_LIBZIP=ON
  -DUSING_X11_VULKAN=OFF
- -DUSE_DISCORD=OFF"
-hostmakedepends="pkg-config python3 git"
+ -DUSE_DISCORD=OFF
+ -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
+hostmakedepends="pkg-config python3"
 makedepends="zlib-devel ffmpeg-devel libzip-devel
- snappy-devel rapidjson SDL2-devel libpng-devel libmali-bifrost"
-short_desc="Fast and portable PSP emulator"
+ snappy-devel rapidjson SDL2-devel libpng-devel libgo2-devel libdrm-devel
+ MesaLib-devel"
+short_desc="Fast and portable PSP emulator (go2)"
 maintainer="John <johnz@posteo.net>"
 license="GPL-2.0-or-later"
 homepage="https://www.ppsspp.org/"
 distfiles="
- https://github.com/hrydgard/ppsspp/archive/${_gitrev}.tar.gz
- https://github.com/hrydgard/ppsspp-lang/archive/3801783.tar.gz
- https://github.com/hrydgard/glslang/archive/d0850f8.tar.gz
+ https://github.com/OtherCrashOverride/ppsspp-go2/archive/${_gitrev}.tar.gz
+ https://github.com/hrydgard/ppsspp-lang/archive/03707d6.tar.gz
+ https://github.com/hrydgard/glslang/archive/f9d08a2.tar.gz
  https://github.com/KhronosGroup/SPIRV-Cross/archive/a1f7c8d.tar.gz
  https://github.com/Kingcom/armips/archive/7885552.tar.gz"
-checksum="72ad1a34eb7f9cd3f776fecf723aa5c4795f6e73e7f6db0995be96b71d94b97d
-415f005bbf576a185c928117473e0cf8e396d71346f5fa9d34376acc1a8a604f
-699e177e0022f17c204e3542bbf7fcb6843923095968edc1ebbc5124e85a2bdf
+checksum="18d53993770f51bf2ed974fd54f0e5e4a08812b10788a88f79d976c56e9f939d
+1414891931941da247d303f220dfadda2ce923c8f130a5f8d29b6d2792fbb0a5
+1e4284387cc586acb7ce0eefba712fe15e11a87c45c102063c11d0fa60f66dce
 456b1e2a75a8e82985ce22f4707570c7aa1fc50d4119cba1a641e8b233ecde26
 f8a03906135fb6f2932b80b7ef5991f39ccac46b36ec3690776fb38c69775c3d"
+
+CFLAGS+=" -flto=$(nproc) -fuse-linker-plugin"
+CXXFLAGS+=" -flto=$(nproc) -fuse-linker-plugin"
+LDFLAGS+=" -flto=$(nproc) -fuse-linker-plugin"
 
 pre_configure() {
 	# copy submodules to right location
@@ -40,6 +46,8 @@ pre_configure() {
 	cp -rup ${wrksrc}/armips-*/* ${wrksrc}/${pkgname}-${_gitrev}/ext/armips
 	cp -rup ${wrksrc}/glslang-*/* ${wrksrc}/${pkgname}-${_gitrev}/ext/glslang
 	cp -rup ${wrksrc}/SPIRV-Cross-*/* ${wrksrc}/${pkgname}-${_gitrev}/ext/SPIRV-Cross
+
+    vsed -i SDL/SDLMain.cpp -e "s:drm/drm_fourcc.h:libdrm/drm_fourcc.h:"
 }
 
 do_install() {
