@@ -4,12 +4,11 @@ version=2.0.12
 revision=1
 build_style=gnu-configure
 wrksrc="SDL2-${version}"
-configure_args="--enable-alsa --disable-esd --disable-rpath --enable-libudev
- --enable-clock_gettime --disable-nas --disable-arts --disable-x11-shared
- --disable-alsa-shared --disable-pulseaudio-shared --enable-dbus --enable-video-kmsdrm --enable-sdl-dlopen --enable-video-opengles"
-hostmakedepends="pkg-config nasm"
-makedepends="alsa-lib-devel dbus-devel eudev-libudev-devel libusb-compat-devel
- libsamplerate-devel libgo2-devel"
+configure_args="--prefix=/usr --enable-alsa --disable-esd --disable-rpath --enable-libudev --disable-alsatest --disable-input-tslib --disable-video-opengl
+ --enable-clock_gettime --disable-nas --disable-arts --disable-x11-shared --disable-video-x11 --disable-pulseaudio --disable-video-wayland
+ --disable-alsa-shared --disable-pulseaudio-shared --enable-dbus --enable-video-kmsdrm --enable-sdl-dlopen --enable-video-opengles --disable-video-x11-xrandr --disable-video-vulkan"
+hostmakedepends="pkg-config autoconf which"
+makedepends="alsa-lib-devel eudev-libudev-devel libusb-compat-devel libsamplerate-devel libgo2-devel libdrm-devel libmali-bifrost MesaLib-devel sndio-devel librga-devel"
 short_desc="Simple DirectMedia Layer (version 2) w/ go2 rotation"
 maintainer="Orphaned <orphan@voidlinux.org>"
 license="Zlib"
@@ -18,6 +17,10 @@ distfiles="http://www.libsdl.org/release/SDL2-${version}.tar.gz"
 checksum=349268f695c02efbc9b9148a70b85e58cefbbf704abd3e91be654db7f1e2c863
 provides="SDL2-${version}_${revision}"
 replaces="SDL2>=0"
+
+pre_configure() {
+    ./autogen.sh
+}
 
 SDL2-go2-devel_package() {
 	short_desc+=" - development files"
