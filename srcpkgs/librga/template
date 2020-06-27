@@ -3,6 +3,7 @@ pkgname=librga
 version=4.0.0
 revision=1
 _gitrev=87737c0b4425e2372086385de7fe9c54b9dbbace
+archs="aarch64 armv7*"
 wrksrc="linux-rga-${_gitrev}"
 build_style=gnu-makefile
 short_desc="Rockchip RGA rotation and scaling library"
