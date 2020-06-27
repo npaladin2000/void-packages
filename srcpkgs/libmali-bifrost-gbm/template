@@ -13,7 +13,7 @@ checksum=49fdd86cc046e109ecb610fc2bde6bdbe2c63cd5e2aaba6bcdc4f00add884ea3
 makedepends="libdrm"
 provides="libEGL-1.0_1 libGLES-1.0_1 libgbm-20.1.1_2"
 replaces="libEGL>=0 libGLES>=0 libgbm>=0"
-shlib_provides="libEGL.so libgbm.so.1 libGLESv2.so libGLESv1_CM.so"
+shlib_provides="libEGL.so.1 libgbm.so.1 libGLESv2.so.2 libGLESv1_CM.so.1 libmali.so libMali.so"
 archs="aarch64 armv7l*"
 
 do_install() {
