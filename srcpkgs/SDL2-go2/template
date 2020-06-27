@@ -1,9 +1,10 @@
 # Template file for 'SDL2'
 pkgname=SDL2-go2
+_gitrev=8754b9d4f10961118610656142d00e26e39220df
 version=2.0.12
 revision=1
 build_style=gnu-configure
-wrksrc="SDL2-${version}"
+wrksrc="SDL-mirror-${_gitrev}"
 configure_args="--prefix=/usr --enable-alsa --disable-esd --disable-rpath --enable-libudev --disable-alsatest --disable-input-tslib --disable-video-opengl
  --enable-clock_gettime --disable-nas --disable-arts --disable-x11-shared --disable-video-x11 --disable-pulseaudio --disable-video-wayland
  --disable-alsa-shared --disable-pulseaudio-shared --enable-dbus --enable-video-kmsdrm --enable-sdl-dlopen --enable-video-opengles --disable-video-x11-xrandr --disable-video-vulkan"
@@ -13,10 +14,13 @@ short_desc="Simple DirectMedia Layer (version 2) w/ go2 rotation"
 maintainer="Orphaned <orphan@voidlinux.org>"
 license="Zlib"
 homepage="http://www.libsdl.org/"
-distfiles="http://www.libsdl.org/release/SDL2-${version}.tar.gz"
-checksum=349268f695c02efbc9b9148a70b85e58cefbbf704abd3e91be654db7f1e2c863
+distfiles="https://github.com/spurious/SDL-mirror/archive/${_gitrev}.tar.gz"
+checksum=3b56467d0ff12ee843a8d5c0b66653ad20c72ce3edf13d03e5d2323f2880950b
 provides="SDL2-${version}_${revision}"
 replaces="SDL2>=0"
+patch_args="-p1"
+
+LDFLAGS="$LDFLAGS -lrga"
 
 pre_configure() {
     ./autogen.sh

@@ -1,6 +1,6 @@
 # Template file for 'drastic-go2'
 pkgname=drastic-go2
-version=2.4.0
+version=2.5.2.0
 revision=1
 wrksrc="drastic"
 makedepends="SDL2-2.0.10-go2"
