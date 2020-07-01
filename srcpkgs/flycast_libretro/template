@@ -2,7 +2,7 @@
 pkgname=flycast_libretro
 _gitrev=25ff4b55a35df5017a68ddb4abaf9f035b2030f4
 version=1.0.0
-revision=3
+revision=5
 wrksrc="flycast-${_gitrev}"
 hostmakedepends="pkg-config libtool git"
 makedepends="zlib-devel libdrm-devel libgomp-devel MesaLib-devel"
@@ -15,7 +15,15 @@ checksum=45fc272c8103fc554589564bba64524727c70b9442856a531093e3fc0c82b4a4
 patch_args="-Np1"
 
 do_build() {
-    make -j8 platform=classic_armv8_a35
+    local _platform
+    vsed -i Makefile -e "s/-O3/-O2/"
+
+	case "$XBPS_TARGET_MACHINE" in
+		armv7*) _platform="classic_armv8_a35";;
+		aarch64*) _platform="goadvance";;
+    esac
+
+    make -j8 platform="${_platform}"
 }
 
 do_install() {
