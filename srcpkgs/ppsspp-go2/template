@@ -36,6 +36,7 @@ checksum="18d53993770f51bf2ed974fd54f0e5e4a08812b10788a88f79d976c56e9f939d
 456b1e2a75a8e82985ce22f4707570c7aa1fc50d4119cba1a641e8b233ecde26
 f8a03906135fb6f2932b80b7ef5991f39ccac46b36ec3690776fb38c69775c3d"
 patch_args="-Np1"
+replaces="ppsspp"
 
 CFLAGS+=" -flto=$(nproc) -fuse-linker-plugin"
 CXXFLAGS+=" -flto=$(nproc) -fuse-linker-plugin"
