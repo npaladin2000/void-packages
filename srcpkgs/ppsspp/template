@@ -22,7 +22,7 @@ hostmakedepends="pkg-config python3 git"
 makedepends="zlib-devel ffmpeg-devel libzip-devel
  snappy-devel rapidjson SDL2-devel libpng-devel libmali-bifrost-gbm"
 short_desc="Fast and portable PSP emulator"
-maintainer="John <johnz@posteo.net>"
+maintainer="John <me@johnnynator.dev>"
 license="GPL-2.0-or-later"
 homepage="https://www.ppsspp.org/"
 distfiles="
